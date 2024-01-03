@@ -22,4 +22,16 @@ class TaskController extends Controller
         $task = Task::find($id);
         return response()->json(["status"=>"ok","data"=>$task]);
     }
+
+    function update(Request $request, $id){
+        $task = Task::find($id);
+        $task->update($request->all());
+        return response()->json(["status"=>"ok","data"=>$task]); 
+    }
+
+    function delete($id){
+        $task = Task::find($id);
+        $task->delete();
+        return response()->json(["status"=>"ok","message"=>"Successfully deleted"]);
+    }
 }
