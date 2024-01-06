@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\PassportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,22 +16,7 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('/hello', function(){
-    return "Hello World";
-});
-
-Route::get('/goodbye/{name}', function($name){
-    return "Goodbye ".$name;
-});
-
-Route::post('/info', function(Request $request){
-    return "Your name is ".$request["name"]." your age is ".$request["age"]." years old.";
-});
-
+Route::middleware('jwt.auth')->group(function(){
 
 // Create
 
@@ -49,4 +36,31 @@ Route::put('/tasks/{id}', [TaskController::class,'update']);
 // Delete an employee
 
 Route::delete('/tasks/{id}',[TaskController::class,'delete']);
+});
+
+Route::get('/hello', function(){
+    return "Hello World";
+});
+
+Route::get('/goodbye/{name}', function($name){
+    return "Goodbye ".$name;
+});
+
+Route::post('/info', function(Request $request){
+    return "Your name is ".$request["name"]." your age is ".$request["age"]." years old.";
+});
+
+
+
+
+// Tag
+
+Route::post('/tags',[TagController::class,'create']);
+
+Route::get('/tags',[TagController::class,'index']);
+Route::get('/tags/{id}',[TagController::class,'show']);
+
+
+Route::post('/login',[PassportController::class,'login']);
+Route::post('/register',[PassportController::class,'register']);
 
